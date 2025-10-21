@@ -1,101 +1,87 @@
-name: Release - Process 2
-description: Start the Release Process (fields used by CI and Change Request automation)
-title: "Release: <short summary>"
+name: Release - Process
+description: Creates CR for a Process
+title: "<short description of change>"
 labels:
   - release
   - process
 
 body:
-  - type: markdown
-    attributes:
-      value: >
-        Please fill out the fields below. These are used to create/update the
-        Change Request and to open a draft PR.
-        _Start date is assumed to be today by automation, so it's omitted here._
-
-  # --- Who's filing this
   - type: input
     id: user_email
     attributes:
-      label: Assignee email
-      description: Email of the person creating this issue.
+      label: Requester email
+      description: Email of the user whom the CR will be assigned to.
       placeholder: "email@noreply.com"
     validations:
       required: true
 
-  # --- Scheduling
+
   - type: input
-    id: end
+    id: backup_contact
     attributes:
-      label: End date
-      placeholder: "MM/DD/YY"
+      label: Backup contact (email)(required for CR approval)
+      placeholder: "email@noreply.com"
+
+
+  - type: input
+    id: target_end_date
+    attributes:
+      label: Target end date
+      description: "When will this be completed/deployed? Use MM-DD-YY."
+      placeholder: "MM-DD-YY"
     validations:
       required: true
 
-  # --- Effort / Project
-  - type: dropdown
-    id: effort
+  - type: markdown
     attributes:
-      label: Effort/Project
-      options:
-        - Defect Resolution
-        - Executive Sponsor Projects
-        - Maintenance and Operation
-        - Legislative Mandate
-        - User Request
-        - Test Environment
-    validations:
-      required: true
+      value: |
+        ## Overview
+        Provide context for reviewers to understand the change.
 
-  # --- Business + Technical details
   - type: textarea
     id: description
     attributes:
       label: Description
-      description: What is changing at a high level?
-      placeholder: "One or two sentences describing the change."
+      description: Put as much detail as possible about the change.
+      placeholder: >
+        Describe the change in detail. Paste any neccessary info/technical details.
     validations:
       required: true
 
-  - type: textarea
+  - type: input
     id: business_value
     attributes:
-      label: Business value
-      description: Why are we doing this now? What outcome/value will be delivered?
+      label: Business value (executive summary)
+      description: "Business-speak version of the update: benefits, outcomes, KPIs, etc."
+      placeholder: "How does the DMV benefit from this change in laymans' terms."
     validations:
       required: true
 
-  - type: textarea
-    id: plan
+  - type: input
+    id: implementation_plan
     attributes:
       label: Implementation plan
-      description: Step-by-step plan to implement the change.
-      placeholder: |
-        1) ...
-        2) ...
-        3) ...
+      placeholder: "Explain the implementation plan, providing details."
     validations:
       required: true
 
-  - type: textarea
-    id: validation_plan
-    attributes:
-      label: Validation plan
-      description: How will you verify the change is working as expected?
-      placeholder: "Test cases, acceptance criteria, monitoring checks…"
-    validations:
-      required: true
-
-  - type: textarea
+  - type: input
     id: backout_plan
     attributes:
       label: Backout plan
-      description: If something goes wrong, how will you safely roll back?
-      placeholder: "Rollback steps, data restore, toggles to flip…"
+      placeholder: "How to revert the change if needed."
     validations:
       required: true
 
-  # --- Audience & Contacts
+  - type: input
+    id: validation_plan
+    attributes:
+      label: Validation plan
+      placeholder: "Pre/post checks, success criteria, monitoring, etc."
+    validations:
+      required: true
+
+
   - type: markdown
     attributes:
       value: |
@@ -139,13 +125,19 @@ body:
     validations:
       required: true
 
-  - type: input
-    id: backup_contact
+  - type: dropdown
+    id: effort
     attributes:
-      label: Backup contact (email)
-      placeholder: "email@noreply.com"
+      label: Effort/Project
+      options:
+        - Defect Resolution
+        - Executive Sponsor Projects
+        - Maintenance and Operation
+        - Legislative Mandate
+        - User Request
+        - Test Environment
     validations:
-      required: false
+      required: true
 
   - type: checkboxes
     id: checklist
@@ -158,4 +150,6 @@ body:
         - label: Involves CDT.
           required: false
         - label: New app (ESD needs to know).
+          required: false
+        - label: Impact a Vendors.
           required: false
