@@ -1,0 +1,27 @@
+# Create the branch as soon as the issue is created
+mode: immediate
+
+# Default naming: issue number + sanitized title (action’s “full” is default)
+# We only need to set label-based prefixes:
+branches:
+  # hotfix template (label: hotfix)
+  - label: hotfix
+    prefix: hotfix/
+  # library template (labels: library + release)
+  - label: [library, release]
+    prefix: library/
+  # process template (labels: process + release)
+  - label: [process, release]
+    prefix: release/
+
+# Open a PR automatically (draft by default — we’ll flip to ready for hotfix below)
+openDraftPR: true
+
+# Copy key attributes from the issue to the PR (body, labels, etc.)
+copyIssueDescriptionToPR: true
+copyIssueLabelsToPR: true
+copyIssueAssigneeToPR: true
+copyIssueMilestoneToPR: true
+
+# That first empty commit used to open the PR can trigger CI; skip if you want
+prSkipCI: true
