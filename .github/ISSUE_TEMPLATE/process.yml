@@ -1,35 +1,38 @@
-name: "Release - Process"
-description: "Request a new release"
-labels: ["release","process"]
+name: Release - Process 2
+description: Start the Release Process (fields used by CI and Change Request automation)
+title: "Release: <short summary>"
+labels:
+  - release
+  - process
+
 body:
-  - type: input
-    id: user
-    attributes:
-      label: Assignee email
-      placeholder: "email@noreply.com"
-  # ─────────────── Details ───────────────
   - type: markdown
     attributes:
-      value: |
-        ## Details
-        _Dates_
+      value: >
+        Please fill out the fields below. These are used to create/update the
+        Change Request and to open a draft PR.
+        _Start date is assumed to be today by automation, so it's omitted here._
 
+  # --- Who's filing this
   - type: input
-    id: start_date
+    id: user_email
     attributes:
-      label: Start date
-      placeholder: "YYYY-MM-DD"
+      label: Assignee email
+      description: Email of the person creating this issue.
+      placeholder: "email@noreply.com"
     validations:
       required: true
 
+  # --- Scheduling
   - type: input
-    id: end_date
+    id: end
     attributes:
       label: End date
-      placeholder: "YYYY-MM-DD"
+      placeholder: "MM/DD/YY"
     validations:
       required: true
 
+  # --- Effort / Project
   - type: dropdown
     id: effort
     attributes:
@@ -38,52 +41,61 @@ body:
         - Defect Resolution
         - Executive Sponsor Projects
         - Maintenance and Operation
-        - Legistlative Mandate
+        - Legislative Mandate
         - User Request
         - Test Environment
     validations:
       required: true
 
-  # ─────────────── Rationale ───────────────
-  - type: markdown
-    attributes:
-      value: |
-        ## Rationale
-        _Why, how, and risks_
-
+  # --- Business + Technical details
   - type: textarea
-    id: justification
+    id: description
     attributes:
-      label: Justification
-      placeholder: "Why this"
+      label: Description
+      description: What is changing at a high level?
+      placeholder: "One or two sentences describing the change."
     validations:
       required: true
 
   - type: textarea
-    id: implementation_plan
+    id: business_value
+    attributes:
+      label: Business value
+      description: Why are we doing this now? What outcome/value will be delivered?
+    validations:
+      required: true
+
+  - type: textarea
+    id: plan
     attributes:
       label: Implementation plan
-      placeholder: "High-level steps"
+      description: Step-by-step plan to implement the change.
+      placeholder: |
+        1) ...
+        2) ...
+        3) ...
     validations:
       required: true
 
   - type: textarea
-    id: test_plan
+    id: validation_plan
     attributes:
-      label: Test plan
-      placeholder: "Testing strategy"
+      label: Validation plan
+      description: How will you verify the change is working as expected?
+      placeholder: "Test cases, acceptance criteria, monitoring checks…"
     validations:
       required: true
 
   - type: textarea
-    id: risk
+    id: backout_plan
     attributes:
-      label: Risk
-      placeholder: "Top risks"
+      label: Backout plan
+      description: If something goes wrong, how will you safely roll back?
+      placeholder: "Rollback steps, data restore, toggles to flip…"
     validations:
       required: true
 
-  # ─────────────── Audience & Contacts ───────────────
+  # --- Audience & Contacts
   - type: markdown
     attributes:
       value: |
@@ -127,19 +139,13 @@ body:
     validations:
       required: true
 
-  # ─────────────── Backup & Confirmations ───────────────
-  - type: markdown
-    attributes:
-      value: |
-        ## Backup & Confirmations
-        _Point of contact and quick flags._
-
   - type: input
     id: backup_contact
     attributes:
       label: Backup contact (email)
       placeholder: "email@noreply.com"
-
+    validations:
+      required: false
 
   - type: checkboxes
     id: checklist
