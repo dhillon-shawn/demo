@@ -13,7 +13,7 @@ branches:
     prefix: release/
 
 # Open PRs as DRAFT by default; we’ll "ready" hotfix via API in the workflow
-openDraftPR: true
+openPR: true
 
 # Copy stuff from Issue → PR
 copyIssueDescriptionToPR: true
