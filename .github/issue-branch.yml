@@ -1,10 +1,9 @@
-
 mode: immediate
 
-
+# Branch name piece after the prefix → "8-my-feature"
 branchName: '${issue.number}-${issue.title}'
 
-# Label-based prefixes
+# Label-based prefixes (matches your templates)
 branches:
   - label: hotfix
     prefix: hotfix/
@@ -13,13 +12,16 @@ branches:
   - label: [process, release]
     prefix: release/
 
-openPR: true
+# Open PRs as DRAFT by default; we’ll "ready" hotfix via API in the workflow
+openDraftPR: true
 
-
+# Copy stuff from Issue → PR
 copyIssueDescriptionToPR: true
 copyIssueLabelsToPR: true
 copyIssueAssigneeToPR: true
 copyIssueMilestoneToPR: true
-copyIssueProjectsToPR: true
+# optional:
+# copyIssueProjectsToPR: true
 
+# Avoid CI on the initial empty commit
 prSkipCI: true
